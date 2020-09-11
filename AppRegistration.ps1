@@ -17,9 +17,9 @@
 
 param(
 
-        [string] [Parameter(Mandatory=$true)] $pkf,
+        [string] [Parameter(Mandatory=$true)] $ps,
 
-        [string] [Parameter(Mandatory=$true)] $usr
+        [string] [Parameter(Mandatory=$true)] $us
 
 )
 
