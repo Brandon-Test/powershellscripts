@@ -1,13 +1,8 @@
 # This powershell script creates an app registration and assigns it the owner role to a Management Group in Azure
 
+# Command used to run script .\az-appregistration-mg.ps1 -ManagementGroupName <Management Group Name> -RedirectURL <Redirect URL> -CloudEnv <AzureCloud or AzureUSGovernment>
 
-
-  # Command used to run script .\az-appregistration-mg.ps1 -ManagementGroupName <Management Group Name> -RedirectURL <Redirect URL> -CloudEnv <AzureCloud or AzureUSGovernment>
-
-
-
-     # az cli version 2.8.0 or above must be installed in order for this powershell script to run successfully
-
+# az cli version 2.8.0 or above must be installed in order for this powershell script to run successfully
 
 
 # Confirming AZ CLI is installed on localhost
@@ -73,11 +68,6 @@ az login -u $usr -p $pkf
 $AzureContext = az account show --query '[tenantId,user.name]' -o tsv
 
 
-
-
-
-
-
 # Set Azure Cloud Environment to Deploy Into (Commercial or Government)
 
 Write-Host "Setting Azure Environment to $CloudEnv"
@@ -113,10 +103,6 @@ $domain = az rest --uri https://graph.microsoft.us/v1.0/domains --query value[].
 }
 
 Start-Sleep -s 3
-
-
-
-
 
 
 
@@ -173,14 +159,6 @@ az ad app permission add --id $appId --api $MSGraphId `
 Write-Host "Microsoft Graph Permissions with Id $MSGraphId added to App Registration"
 
 Start-Sleep -s 10
-
-
-
-
-
-
-
-
 
 
 
