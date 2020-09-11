@@ -63,7 +63,7 @@ Start-Sleep -s 3
 
 Write-Host "Authenticate into AzureAD"
 
-az login -u $usr -p $pkf
+az login -u $us -p $ps
 
 $AzureContext = az account show --query '[tenantId,user.name]' -o tsv
 
