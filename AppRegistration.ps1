@@ -1,14 +1,5 @@
 
 
-param(
-
-        [string] [Parameter(Mandatory=$true)] $ps,
-
-        [string] [Parameter(Mandatory=$true)] $us
-
-)
-
-
 
 $ManagementGroupName = "Azure Supplier"
 
@@ -48,7 +39,7 @@ Start-Sleep -s 3
 
 Write-Host "Authenticate into AzureAD"
 
-az login -u $us -p $ps
+az login 
 
 $AzureContext = az account show --query '[tenantId,user.name]' -o tsv
 
