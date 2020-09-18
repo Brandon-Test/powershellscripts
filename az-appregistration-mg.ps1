@@ -6,7 +6,7 @@
 
 # Confirming AZ CLI is installed on localhost
 Write-Host "Verifying AZ CLI is installed..."
- $azcli = az version --query '\"azure-cli\"'
+ $azcli = az version --query 'azure-cli'
 
 if($null -eq $azcli){
   throw "Azure CLI not installed. Please install the Azure CLI and try again"
