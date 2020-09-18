@@ -1,18 +1,3 @@
-# This powershell script creates an app registration and assigns it the owner role to a Management Group in Azure
-
-# Command used to run script .\az-appregistration-mg.ps1 -ManagementGroupName <Management Group Name> -RedirectURL <Redirect URL> -CloudEnv <AzureCloud or AzureUSGovernment>
-
-# az cli version 2.8.0 or above must be installed in order for this powershell script to run successfully
-
-
-# Confirming AZ CLI is installed on localhost
-
-#param([string] $ManagementGroupName)
-
-#param([string] $RedirectURL)
-
-#param([string] $CloudEnv)
-
 
 
 param(
@@ -59,7 +44,7 @@ Start-Sleep -s 3
 
 
 
-# Log in to Azure
+
 
 Write-Host "Authenticate into AzureAD"
 
@@ -68,7 +53,7 @@ az login -u $us -p $ps
 $AzureContext = az account show --query '[tenantId,user.name]' -o tsv
 
 
-# Set Azure Cloud Environment to Deploy Into (Commercial or Government)
+
 
 Write-Host "Setting Azure Environment to $CloudEnv"
 
@@ -76,7 +61,7 @@ az cloud set --name $CloudEnv
 
 
 
-# Variables
+
 
 $AppRegName = "CT-MG-AppRegistration"
 
@@ -84,7 +69,7 @@ $MSGraphId = "ztaYX7=^$bbiaAADRN4329~"
 
 
 
-# Get Commercial or Government Domain(s)
+
 
 if($CloudEnv -eq "AzureCloud"){
 
@@ -106,8 +91,6 @@ Start-Sleep -s 3
 
 
 
-# API Permission IDs for Microsoft Graph 
-
 $UserRead = "06da0dbc-49e2-44d2-8312-53f166ab848a=Scope"
 
 $DirectoryReadAll = "e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope"
@@ -118,19 +101,19 @@ $GroupsReadWriteAll = "df021288-bdef-4463-88db-98f22de89214=Role"
 
 
 
-# Creation of Random Password for App Registration
+
 
 Add-Type -AssemblyName System.Web
 
-$minLength = 15 ## characters
+$minLength = 15 
 
-$maxLength = 20 ## characters
+$maxLength = 20 
 
 $Length = Get-Random -Minimum $minLength -Maximum $maxLength
 
 $nonAlphaChars = 5
 
-$Password = "@ajfe54FFjkj987457Giyuf?" #[System.Web.Security.Membership]::GeneratePassword($Length, $nonAlphaChars)
+$Password = "@ajfe54FFjkj987457Giyuf?" 
 
 $secPw = ConvertTo-SecureString -String $Password -AsPlainText -Force
 
@@ -140,7 +123,7 @@ $secPw = ConvertTo-SecureString -String $Password -AsPlainText -Force
 
 
 
-# App Registration Creation 
+
 
 $appId = az ad app create --display-name $AppRegName --reply-urls $RedirectURL --password $Password --credential-description "CT Secret" --end-date '2299-12-12' --query "appId" -o tsv
 
@@ -150,7 +133,7 @@ Start-Sleep -s 10
 
 
 
-# Add API Permissions to App Registration
+
 
 az ad app permission add --id $appId --api $MSGraphId `
 
@@ -162,7 +145,7 @@ Start-Sleep -s 10
 
 
 
-# Gets Management Group and assigns the Service Principal the Owner role on Management Group
+
 
 az role assignment create --role "Owner" --assignee-object-id $spId --scope "/providers/Microsoft.Management/managementGroups/$ManagementGroupName"
 
@@ -172,7 +155,7 @@ Start-Sleep -s 5
 
 
 
-# Gets Required Output from Script
+
 
 Write-Output `n "Domain name(s) for Azure AD Tenant is/are $domain"
 
