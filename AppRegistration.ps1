@@ -1,6 +1,3 @@
-
-
-
 $ManagementGroupName = "Azure Supplier"
 
 $RedirectURL = "https://www.google.com"
